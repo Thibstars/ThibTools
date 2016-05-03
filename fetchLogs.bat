@@ -18,14 +18,13 @@ FOR /F "tokens=1,2 skip=1" %%A IN ('adb devices') DO (
 	if "!IS_DEV!" == "device" (
 	    SET SERIAL=%%A
 		
-	    echo Fetching logs for: !SERIAL!
+	    echo Fetching logs for: !SERIAL!...
 		
 	    call adb -s !SERIAL! logcat -v time -d>%DIR%/log_!SERIAL!.txt
-		
-		echo Successfully saved logs to folder: %DIR%
+
+		echo Successfully saved logs to folder: %DIR%.
 		echo ======================================================
 	)
 )
 echo Finished fetching logs.
 ENDLOCAL
-pause

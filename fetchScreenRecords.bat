@@ -32,12 +32,12 @@ FOR /F "tokens=1,2 skip=1" %%A IN ('adb devices') DO (
 		
 		:: Proceed if supported
 		IF !API! GEQ %REQ_API% (
-		echo Fetching screenrecord for: !SERIAL!
+		echo Fetching screenrecord for: !SERIAL!...
 	    call adb -s !SERIAL! shell screenrecord /sdcard/video_!SERIAL!.mp4
 		call adb -s !SERIAL! pull /sdcard/video_!SERIAL!.mp4 %DIR%/video_!SERIAL!.mp4
 		call adb -s !SERIAL! shell rm /sdcard/video_!SERIAL!.mp4
 		
-		echo Successfully saved video recording to folder: %DIR%
+		echo Successfully saved video recording to folder: %DIR%.
 		echo ======================================================
 		)
 	)

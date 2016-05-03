@@ -18,7 +18,7 @@ FOR /F "tokens=1,2 skip=1" %%A IN ('adb devices') DO (
 	if "!IS_DEV!" == "device" (
 	    SET SERIAL=%%A
 		
-	    echo Fetching screenshot for: !SERIAL!
+	    echo Fetching screenshot for: !SERIAL!...
 	    call adb -s !SERIAL! shell screencap -p /sdcard/screen_!SERIAL!.png
 		call adb -s !SERIAL! pull /sdcard/screen_!SERIAL!.png "%DIR%"
 		call adb -s !SERIAL! shell rm /sdcard/screen_!SERIAL!.png

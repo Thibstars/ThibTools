@@ -1,2 +1,4 @@
 @ echo off
-ADB+P "logcat -c"
+echo Clearing logs...
+@call ADB+P "logcat -c" > nul
+echo Ready!
