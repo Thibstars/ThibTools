@@ -10,3 +10,4 @@ echo fetchscreenshots		fetch screenshots of all connected devices
 echo fetchscreenrecords		fetch screen records of all connected devices
 echo fetchlogsandscreenshots		fetch logs and screenshots of all connected devices
 echo fetchlogsandscreenrecords	fetch logs and screen records of all connected devices
+echo devicecount			display the amounts of attached devices and emulators

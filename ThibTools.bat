@@ -1,5 +1,5 @@
 @echo off
-TITLE ThibTools 1.0 - By Thibault Helsmoortel
+TITLE ThibTools 1.0.2 - By Thibault Helsmoortel
 
 echo Welcome to ThibTools.
 echo ThibTools provides you with a set of commands to simplify your Android testing with adb.
