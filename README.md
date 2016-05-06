@@ -6,3 +6,5 @@ The project especially makes it easy to perform adb actions on all the connected
 ## Installation:
 * Create a dedicated folder (ex: call it "ThibTools");
 * Extract zip release file in this folder.
+
+NOTE: Make sure you have adb.exe included in your system PATH environment variable.
