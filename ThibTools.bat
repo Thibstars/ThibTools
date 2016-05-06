@@ -1,7 +1,10 @@
 @echo off
-TITLE ThibTools 1.0.2 - By Thibault Helsmoortel
 
-echo Welcome to ThibTools.
+SET "VER=1.0.3"
+
+TITLE ThibTools %VER% - By Thibault Helsmoortel
+
+echo Welcome to ThibTools %VER%.
 echo ThibTools provides you with a set of commands to simplify your Android testing with adb.
 echo ========================================================================================
 
