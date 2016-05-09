@@ -6,8 +6,8 @@ IF [%1] == [] goto NOPARAM
 IF NOT "%1"=="-s" goto MAIN
 IF "%1"=="-s" goto FORDEV
 
-SETLOCAL ENABLEDELAYEDEXPANSION 
 :MAIN
+SETLOCAL ENABLEDELAYEDEXPANSION 
 FOR /F "tokens=1,2 skip=1" %%A IN ('adb devices') DO (
     SET IS_DEV=%%B
 	IF "!IS_DEV!" == "device" (
