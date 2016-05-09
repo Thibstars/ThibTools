@@ -1,6 +1,6 @@
 @echo off
 
-SET "VER=1.0.3"
+SET "VER=1.0.4"
 
 TITLE ThibTools %VER% - By Thibault Helsmoortel
 
