@@ -1,6 +1,6 @@
 @echo off
 
-SET DIR="properties"
+SET DIR="bugreports"
 
 IF EXIST "\%DIR%" goto HOME
 IF NOT EXIST "\%DIR%" goto MD
@@ -10,17 +10,18 @@ md "%DIR%"
 goto HOME
 
 :HOME
+echo NOTE: Fetching bug reports might take a while. Please be patient.
 SETLOCAL ENABLEDELAYEDEXPANSION 
 FOR /F "tokens=1,2 skip=1" %%A IN ('adb devices') DO (
     SET IS_DEV=%%B
 	IF "!IS_DEV!" == "device" (
 	    SET SERIAL=%%A
 		
-		echo Fetching properties for !SERIAL!...
+		echo Fetching bug report for !SERIAL!...
 		
-		call adb -s !SERIAL! shell getprop > %DIR%/props_!SERIAL!.txt
+		call adb -s !SERIAL! bugreport > %DIR%/report_!SERIAL!.txt
 		
-		echo Successfully saved properties to folder: %DIR%
+		echo Successfully saved bug report to folder: %DIR%
 		echo =====================================================
 	)
 )
