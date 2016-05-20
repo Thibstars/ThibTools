@@ -4,10 +4,10 @@ SET "ARGUMENTS=%ARGUMENTS:""="%"
 SET DIR="logs"
 
 IF EXIST "\%DIR%" goto HOME
-IF NOT EXIST "\%DIR%" goto MD
+goto MD
 
 :MD
-md "%DIR%"
+IF NOT EXIST "\%DIR%" md "%DIR%"
 goto HOME
 
 :HOME
@@ -18,7 +18,9 @@ FOR /F "tokens=1,2 skip=1" %%A IN ('adb devices') DO (
 	if "!IS_DEV!" == "device" (
 	    SET SERIAL=%%A
 		
-	    echo Fetching logs for: !SERIAL!...
+		FOR /F "tokens=* delims=  USEBACKQ" %%F IN (`devices -s !SERIAL!`) DO SET DEV=%%F
+		
+	    echo Fetching logs for: !DEV!
 		
 	    call adb -s !SERIAL! logcat -v time -d>%DIR%/log_!SERIAL!.txt
 

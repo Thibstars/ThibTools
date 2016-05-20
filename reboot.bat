@@ -1,6 +1,6 @@
 @echo off
 
-:: Displays network statistics
+:: Reboots device(s).
 
 IF NOT "%1"=="-s" goto MAIN
 IF "%1"=="-s" goto FORDEV
@@ -14,11 +14,8 @@ FOR /F "tokens=1,2 skip=1" %%A IN ('adb devices') DO (
 		
 		FOR /F "tokens=* delims=  USEBACKQ" %%F IN (`devices -s !SERIAL!`) DO SET DEV=%%F
 		
-		echo Network statistics of: !DEV!
-		
-		call adb -s !SERIAL! shell netstat
-		
-		echo ========================================
+		echo Rebooting !DEV!
+		call adb -s !SERIAL! reboot
 	)
 )
 ENDLOCAL
@@ -27,7 +24,7 @@ goto END
 :FORDEV
 :: Check if the second parameter exists
 IF [%2]==[] echo Please provide the serial number of the device.
-IF NOT [%2]==[] call adb -s %2 shell netstat
+IF NOT [%2]==[] call adb -s %2 reboot
 goto END
 
 :END

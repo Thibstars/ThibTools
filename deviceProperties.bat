@@ -10,10 +10,11 @@ FOR /F "tokens=1,2 skip=1" %%A IN ('adb devices') DO (
 	IF "!IS_DEV!" == "device" (
 	    SET SERIAL=%%A
 		
-		echo Showing device properties of: !SERIAL!...
+		FOR /F "tokens=* delims=  USEBACKQ" %%F IN (`devices -s !SERIAL!`) DO SET DEV=%%F
 		
-		IF NOT [%1]==[] call :PROPERTIES %1 !SERIAL!
+		echo Showing device properties of: !DEV!
 		
+		IF NOT [%1]==[] call :PROPERTIES %1 !SERIAL!		
 		IF [%1]==[] call adb -s !SERIAL! shell getprop
 		
 		echo =======================================================
@@ -36,6 +37,7 @@ IF "%~1"=="operator" call adb -s %~2 shell getprop gsm.operator.alpha
 
 IF "%~1"=="language" call adb -s %~2 shell getprop persist.sys.%~1
 IF "%~1"=="country" call adb -s %~2 shell getprop persist.sys.%~1
+IF "%~1"=="timezone" call adb -s %~2 shell getprop persist.sys.%~1
 
 
 IF "%~1"=="carrier" call adb -s %~2 shell getprop ro.%~1

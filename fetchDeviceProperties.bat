@@ -3,10 +3,10 @@
 SET DIR="properties"
 
 IF EXIST "\%DIR%" goto HOME
-IF NOT EXIST "\%DIR%" goto MD
+goto MD
 
 :MD
-md "%DIR%"
+IF NOT EXIST "\%DIR%" md "%DIR%"
 goto HOME
 
 :HOME
@@ -14,9 +14,11 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 FOR /F "tokens=1,2 skip=1" %%A IN ('adb devices') DO (
     SET IS_DEV=%%B
 	IF "!IS_DEV!" == "device" (
-	    SET SERIAL=%%A
+	    SET SERIAL=%%A		
 		
-		echo Fetching properties for !SERIAL!...
+		FOR /F "tokens=* delims=  USEBACKQ" %%F IN (`devices -s !SERIAL!`) DO SET DEV=%%F
+		
+		echo Fetching properties for !DEV!
 		
 		call adb -s !SERIAL! shell getprop > %DIR%/props_!SERIAL!.txt
 		

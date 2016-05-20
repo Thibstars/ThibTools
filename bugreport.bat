@@ -3,10 +3,10 @@
 SET DIR="bugreports"
 
 IF EXIST "\%DIR%" goto HOME
-IF NOT EXIST "\%DIR%" goto MD
+goto MD
 
 :MD
-md "%DIR%"
+IF NOT EXIST "\%DIR%" md "%DIR%"
 goto HOME
 
 :HOME
@@ -17,7 +17,9 @@ FOR /F "tokens=1,2 skip=1" %%A IN ('adb devices') DO (
 	IF "!IS_DEV!" == "device" (
 	    SET SERIAL=%%A
 		
-		echo Fetching bug report for !SERIAL!...
+		FOR /F "tokens=* delims=  USEBACKQ" %%F IN (`devices -s !SERIAL!`) DO SET DEV=%%F
+		
+		echo Fetching bug report for !DEV!
 		
 		call adb -s !SERIAL! bugreport > %DIR%/report_!SERIAL!.txt
 		

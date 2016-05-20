@@ -12,8 +12,9 @@ FOR /F "tokens=1,2 skip=1" %%A IN ('adb devices') DO (
 	IF "!IS_DEV!" == "device" (
 	    SET SERIAL=%%A
 		
-		echo Pinging %1 on: !SERIAL!...
-		echo ========================================
+		FOR /F "tokens=* delims=  USEBACKQ" %%F IN (`devices -s !SERIAL!`) DO SET DEV=%%F
+		
+		echo Pinging %1 on: !DEV!
 	)
 )
 @call ADB+P "-s !SERIAL! shell ping %1"> nul
@@ -27,4 +28,3 @@ IF NOT [%2]==[] call adb -s %2 shell ping %3
 goto END
 
 :END
-echo Ready!

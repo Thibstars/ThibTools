@@ -12,7 +12,9 @@ FOR /F "tokens=1,2 skip=1" %%A IN ('adb devices') DO (
 	IF "!IS_DEV!" == "device" (
 	    SET SERIAL=%%A
 		
-		echo Showing threads on: !SERIAL!...
+		FOR /F "tokens=* delims=  USEBACKQ" %%F IN (`devices -s !SERIAL!`) DO SET DEV=%%F
+		
+		echo Showing threads on: !DEV!
 		
 		:: TODO: run the following in separate windows (for some strange reason, adb+p does not work with this..., using start waits for a ctrl+c and then opens the next window...)
 		IF NOT [%3]==[] call adb -s !SERIAL! shell top -t | findstr /I "%1"

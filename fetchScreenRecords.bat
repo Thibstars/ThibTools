@@ -5,10 +5,10 @@ SET REQ_API=19
 SET DIR="videos"
 
 IF EXIST "\%DIR%" goto HOME
-IF NOT EXIST "\%DIR%" goto MD
+IFgoto MD
 
 :MD
-md "%DIR%"
+ NOT EXIST "\%DIR%" md "%DIR%"
 goto HOME
 
 :HOME
@@ -32,7 +32,11 @@ FOR /F "tokens=1,2 skip=1" %%A IN ('adb devices') DO (
 		
 		:: Proceed if supported
 		IF !API! GEQ %REQ_API% (
-		echo Fetching screenrecord for: !SERIAL!...
+		
+		FOR /F "tokens=* delims=  USEBACKQ" %%F IN (`devices -s !SERIAL!`) DO SET DEV=%%F
+		
+		echo Fetching screenrecord for: !DEV!
+		
 	    call adb -s !SERIAL! shell screenrecord /sdcard/video_!SERIAL!.mp4
 		call adb -s !SERIAL! pull /sdcard/video_!SERIAL!.mp4 %DIR%/video_!SERIAL!.mp4
 		call adb -s !SERIAL! shell rm /sdcard/video_!SERIAL!.mp4
@@ -44,4 +48,3 @@ FOR /F "tokens=1,2 skip=1" %%A IN ('adb devices') DO (
 )
 echo Finished fetching screen records.
 ENDLOCAL
-pause

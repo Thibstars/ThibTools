@@ -12,8 +12,12 @@ FOR /F "tokens=1,2 skip=1" %%A IN ('adb devices') DO (
 	IF "!IS_DEV!" == "device" (
 	    SET SERIAL=%%A
 		
-		echo Path to apk of %1 on device: !SERIAL!...
+		FOR /F "tokens=* delims=  USEBACKQ" %%F IN (`devices -s !SERIAL!`) DO SET DEV=%%F
+		
+		echo Path to apk of %1 on device: !DEV!
+		
 		call adb -s !SERIAL! shell pm path %1
+		
 		echo ========================================
 	)
 )

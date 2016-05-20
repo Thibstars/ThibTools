@@ -27,6 +27,13 @@ IF "%~1"=="netstat" call :NETSTAT 1
 IF "%~1"=="battery" call :BATTERY 1
 IF "%~1"=="bugreport" call :BUGREPORT 1
 IF "%~1"=="threads" call :THREADS 1
+IF "%~1"=="mainactivity" call :MAINACTIVITY 1
+IF "%~1"=="devices" call :DEVICES 1
+IF "%~1"=="about" call :ABOUT 1
+IF "%~1"=="kill-all" call :KILL-ALL 1
+IF "%~1"=="reboot" call :REBOOT 1
+IF "%~1"=="processes" call :PROCESSES 1
+IF "%~1"=="showip" call :SHOWIP 1
 goto :EOF
 
 
@@ -36,12 +43,14 @@ SETLOCAL EnableDelayedExpansion
 :: Display a list of commands.
 echo A list of commands provided by ThibTools:
 echo =========================================
+call :ABOUT
 call :BATTERY
 call :BUGREPORT
 call :CLEARDATA
 call :CLEARLOGS
 call :DEVICECOUNT
 call :DEVICEPROPERTIES
+call :DEVICES
 call :FETCHDEVICEPROPERTIES
 call :FETCHLOGS
 call :FETCHLOGSANDSCREENSHOTS
@@ -49,10 +58,15 @@ call :FETCHLOGSANDSCREEENRECORDS
 call :FETCHSCREENSHOTS
 call :FETCHSCREENRECORDS
 call :FORCESTOP
+call :KILL-ALL
 call :LAUNCH
+call :MAINACTIVITY
 call :NETSTAT
 call :PACKAGES
 call :PRINTPATH
+call :PROCESSES
+call :REBOOT
+call :SHOWIP
 call :THREADS
 call :VIEWLOGS
 
@@ -120,11 +134,13 @@ echo network					Supported network
 echo operator				Operator
 echo language				Set language
 echo country					Set country
+echo timezone				Set timezone
 echo carrier					Carrier
 echo roaming					Data roaming on/off
 echo dateformat				Date format
 echo builddate				Build date
 echo sdk					API Level
+echo release				Android version
 echo[
 goto :EOF
 
@@ -196,6 +212,8 @@ goto :EOF
 call :ECHOCMD "%SPACING%battery"
 echo Display battery information.
 echo [-s ^<serialNo^>]				Display battery info only for specific device.
+echo ^<FILTER^>				Display filtered battery info. Use words included in the full list.
+echo						or use predefined filters like 'charge'.
 echo[
 goto :EOF
 
@@ -210,6 +228,48 @@ call :ECHOCMD "%SPACING%threads"
 echo Lists the active top threads.
 echo ^<package^>				List threads of a package.
 echo [-s ^<serialNo^>] ^<package^>		Display threads only for specific device.
+echo[
+goto :EOF
+
+:DEVICES
+call :ECHOCMD "%SPACING%devices"
+echo Displays attached devices (better than the default list)
+echo [-s ^<serialNo^>] [-h]			Show only specific device.
+echo [-h]					Show human readable list.
+echo[
+goto :EOF
+
+:ABOUT
+call :ECHOCMD "%SPACING%about"
+echo Shows more information about ThibTools.
+echo[
+goto :EOF
+
+:KILL-ALL
+call :ECHOCMD "%SPACING%kill-all"
+echo Kills active processes (with exception of system processes and others). Root permissions required^^!
+echo [-s ^<serialNo^>]				Kills all active processes only for specific device.
+echo[
+goto :EOF
+
+:REBOOT
+call :ECHOCMD "%SPACING%reboot"
+echo Reboots device(s).
+echo [-s ^<serialNo^>]				Reboots only specific device.
+echo[
+goto :EOF
+
+:PROCESSES
+call :ECHOCMD "%SPACING%processes"
+echo Displays active processes (with exception of system processes and others).
+echo [-s ^<serialNo^>]				Show processes only for specific device.
+echo[
+goto :EOF
+
+:SHOWIP
+call :ECHOCMD "%SPACING%showip"
+echo Shows the ip address of wlan0.
+echo [-s ^<serialNo^>]				Show ip only for specific device.
 echo[
 goto :EOF
 
